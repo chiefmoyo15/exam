@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Whats up</title>
+  </head>
+  <body>
+    <h1>Hello, {{request.session.name}}</h1>
+
+    <p><a href="{% url 'home:logout' %}">logout</a></p>
+    <h1>Here are your appointments for today, {{date}}</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Tasks</th>
+          <th>Time</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for task in tasklist %}
+        <tr>
+          <td>{{task.task}}</td>
+          <td>{{task.time}}</td>
+          <td>{{task.status}}</td>
+          {% if task.status == 'Done' %}
+            <td></td>
+            {%else%}
+          <td>
+            <a href="{% url 'appointment:edit' taskid=task.id %}">Edit</a>
+            <a href="{% url 'appointment:delete' taskid=task.id %}">Delete</a>
+          </td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <h1>Your other appointments</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for task in tasklist2 %}
+        <tr>
+          <td>{{task.task}}</td>
+          <td>{{task.date}}</td>
+          <td>{{task.time}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table><br>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <form class="" action="{% url 'appointment:process' %}" method="POST">
+      {% csrf_token %}
+      Date: <input type="date" name="date"><br>
+      Time: <input type="time" name="time"><br>
+      Task: <input type="text" name="task"><br>
+      <input type="submit" value="Add">
+    </form>
+  </body>
+</html>

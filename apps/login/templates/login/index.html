@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login Reg | Home</title>
+    {% load staticfiles%}
+		<link rel="stylesheet" href="{% static 'login/css/style.css'%}">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 ">
+          <h3>Register</h3>
+          <form class="form-register" method="post" action="/register">
+            {% csrf_token %}
+            <div class="form-group">
+              <span>First Name</span>
+              <input type="text" class="form-control" name="first_name">
+            </div>
+            <div class="form-group">
+              <span>Last Name</span>
+              <input type="text" class="form-control" name="last_name">
+            </div>
+            <div class="form-group">
+              <span>Email</span>
+              <input type="text" class="form-control" name="email">
+            </div>
+            <div class="form-group">
+              <span>Password</span>
+              <input type="password" class="form-control" name="password">
+            </div>
+            <div class="form-group">
+              <span>confirm pw</span>
+              <input type="password" class="form-control" name="password2">
+            </div>
+            <div class="form-group">
+              <span>Date Hired</span>
+              <input type="date" class="form-control" name="dateHired">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" name="" value="Register">
+            </div>
+          </form>
+        </div>
+        <div class="col-md-3">
+
+        {% if messages %}
+          <ul class="messages">
+            {% for message in messages %}
+              <li class="{{ message.tags }}">{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+        <div class="col-md-3">
+          <form class="form-login" method="post" action="/login">
+            <h3>Login</h3>
+            {% csrf_token %}
+            <div class="form-group">
+              <span>Email</span>
+              <input type="text" class="form-control" name="email">
+            </div>
+            <div class="form-group">
+              <span>Password</span>
+              <input type="password" class="form-control" name="password">
+            </div>
+            <div class="form-now">
+              <input type="submit" class="btn btn-primary" value="Login">
+            </div>
+          </form>
+        </div>
+      </div>
+     </div>
+  </body>
+</html>

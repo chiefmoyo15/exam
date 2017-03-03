@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Whats up</title>
+  </head>
+  <body>
+      <p><a href="{% url 'appointment:index' %}">Home</a></p>
+    <p><a href="{% url 'home:logout' %}">logout</a></p>
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <form class="" action="{% url 'appointment:item' taskid=task.id %}" method="POST">
+      {% csrf_token %}
+    task: <input type="text" name="task" value="{{task.task}}"><br>
+    date: <input type="date" name="date" value="{{task.date}}"> <br>
+    time: <input type="time" name="time" value="{{task.time}}"><br>
+    status: <select name="status">
+          <option value="Done"> Done</option>
+          <option value="pending">Pending</option>
+          <option value="Missed">Missed</option>
+    </select><br>
+
+
+      <input type="submit" name="Update">
+    </form>
+
+  </body>
+</html>
